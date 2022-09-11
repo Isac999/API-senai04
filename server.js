@@ -1,5 +1,5 @@
 const http = require('http');
-const port = process.env.PORT || 3333;
+const port = process.env.PORT || 3000;
 const app = require('./app');
 
 //require('./src/Routes/index')(app);
