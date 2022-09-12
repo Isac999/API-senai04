@@ -22,6 +22,23 @@ app.use('/', (req, res, next) => {
         "API say's ": 'Welcome to API!',
         "Your options": ["/customers", "/products", "/purchases"]
     });
+    next();
+});
+
+
+app.use((req, res, next) => {
+    const error = new Error();
+    error.status = 404;
+    next(error);
+})
+
+app.use((error, req, res, next) => {
+    res.status(error.status || 500);
+    return res.send({
+        error: {
+            "mensagem": "A rota requisitada não existe!"
+        }
+    });
 });
 
 module.exports = app;
