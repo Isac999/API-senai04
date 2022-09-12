@@ -25,7 +25,6 @@ app.use('/', (req, res, next) => {
     next();
 });
 
-
 app.use((req, res, next) => {
     const error = new Error();
     error.status = 404;
