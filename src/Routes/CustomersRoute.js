@@ -8,6 +8,16 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+    const collection = {
+        "name": "Bolsa",
+        "price": 95.99,
+        "description": "It is a beautifull product!"
+    }
+    let customer = {
+        "mensagem": "Produto inserido",
+        "value": collection
+    }
+
     res.status(201).send({
         "mensagem": "Acessado a rota atual com POST"
     });
