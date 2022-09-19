@@ -1,0 +1,15 @@
+INSERT INTO customers (name, money, email, password) VALUES 
+('Jonas Da Silva', 1600.00, 'jonas@gmail.com', 'jonninha12399820'),
+('Mariana Fernanda', 245.96, 'Marianianinha@hotmail.com', 'maremoreana009343'),
+('Luan Mendes', 2300.50, 'lumen@blogspot.com.br', 'maisdefault321fsaf'), 
+('Jurema da Cruz', 1800.50, 'jujubraba@gmail.com', 'jureminhaabrabinha02391'), 
+('Caio Angelo', 102.35, 'caio@fart.com', 'cainho123'),
+('Emerson Luis', 450.00, 'emersondacunha@gmail.com', 'emer34092kdsa');
+
+INSERT INTO products (name, price, description, image_link, created_by) VALUES 
+('Bolsa Pequena', 95.00, 'Uma bolsa unissex estilosa - P', 'https://google.com/linkbolsa', 3),
+('Bolsa Media', 100.00, 'Uma bolsa unissex estilosa - M', 'https://google.com/linkbolsaMedia', 3),
+('Bolsa Grande', 115.00, 'Uma bolsa unissex estilosa - G', 'https://google.com/linkbolsaGrande', 3),
+('Canivete', 56.00, 'Uma canivete suiço multifunções', 'https://google.com/linkcanivetesuico3214f', 2),
+('', 56.00, 'Uma canivete suiço multifunções', 'https://google.com/linkcanivetesuico3214f', 2),
+

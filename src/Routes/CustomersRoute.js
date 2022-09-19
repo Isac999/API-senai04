@@ -1,3 +1,4 @@
+const { request } = require('express');
 const express = require('express');
 const router = express.Router();
 
@@ -9,9 +10,10 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
     const collection = {
-        "name": "Bolsa",
-        "price": 95.99,
-        "description": "It is a beautifull product!"
+        "name": req.body.name,
+        "price": req.body.price,
+        "creator": req.body.creator,
+        "description": req.body.description
     }
     let customer = {
         "mensagem": "Produto inserido",
@@ -19,7 +21,8 @@ router.post('/', (req, res, next) => {
     }
 
     res.status(201).send({
-        "mensagem": "Acessado a rota atual com POST"
+        "mensagem": "Acessado a rota atual com POST",
+        "result": customer
     });
 });
 

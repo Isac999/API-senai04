@@ -14,6 +14,24 @@ const CustomersRoute = require('./src/Routes/CustomersRoute');
 const ProductsRoute = require('./src/Routes/ProductsRoute');
 const PurchasesRouter = require('./src/Routes/PurchasesRouter');
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Header', 
+    'Content-Type',
+    'Origin',
+    'X-Requested-With',
+    'Accept',
+    'Authorization'
+    );
+
+    if (req.method == 'OPTIONS') {
+        res.header('Acces-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
+        return res.status(200).send({});
+    }
+    next();
+
+})
+
 app.use('/customers', CustomersRoute);
 app.use('/products', ProductsRoute);
 app.use('/purchases', PurchasesRouter);
