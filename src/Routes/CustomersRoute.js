@@ -1,5 +1,6 @@
 const { request } = require('express');
 const express = require('express');
+const { render } = require('../../app');
 const router = express.Router();
 const mysql = require('../../mysql').pool;
 
@@ -22,6 +23,9 @@ router.get('/', (req, res, next) => {
                 }
 
                 res.status(200).send({
+                    "message": "Successfully request",
+                    "legth":  result.length,
+                    "method": "GET",
                     "result": result
                 });
             }
@@ -51,7 +55,8 @@ router.post('/', (req, res, next) => {
                 }
 
                 res.status(201).send({
-                    "message": "Success",
+                    "message": "Successfully created",
+                    "method": "POST",
                     "id_customer": result.insertId,
                     "values": {
                         "name": req.body.name,
@@ -93,7 +98,8 @@ router.patch('/', (req, res, next) => {
                     });
                 }
                 res.status(200).send({
-                    "message": "Update success",
+                    "message": "Successfully update",
+                    "method": "PATCH",
                     "id_customer": req.body.id,
                     "newValues": {
                         "name": req.body.name,
@@ -128,6 +134,8 @@ router.delete('/', (req, res, next) => {
 
                 res.status(200).send({
                     "message": "Deleted with success",
+                    "method": "DELETE",
+                    "idTarget": req.body.id
                 });
             }
         )
@@ -154,6 +162,9 @@ router.get('/:id', (req, res, next) => {
                 }
 
                 res.status(200).send({
+                    "message": "Successfully request",
+                    "legth":  result.length,
+                    "method": "GET",
                     "result": result
                 });
             }
