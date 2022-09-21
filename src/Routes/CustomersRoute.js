@@ -8,7 +8,7 @@ router.get('/', (req, res, next) => {
         if (error) {
             return res.status(500).send({
                 "error": error
-            })
+            });
         }
         conn.query(
             'SELECT * FROM customers;',
@@ -18,12 +18,12 @@ router.get('/', (req, res, next) => {
                 if (error) {
                     return res.status(500).send({
                         "error": error
-                    })
+                    });
                 }
 
                 res.status(200).send({
                     "result": result
-                })
+                });
             }
         )
     })
@@ -35,7 +35,7 @@ router.post('/', (req, res, next) => {
         if (error) { 
             return res.status(500).send({
                 "error": error
-            })
+            });
         }
         conn.query(
             'INSERT INTO customers (name, money, email, password) VALUES (?, ?, ?, ?)',
@@ -60,7 +60,7 @@ router.post('/', (req, res, next) => {
                         "email": req.body.email,
                         "password": req.body.password
                     }
-                })
+                });
             }
         )
     })
@@ -79,22 +79,30 @@ router.delete('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-    let id = req.params.id;
-    res.status(200).send({
-        "mensagem": `Retornando o id: ${id}` 
-    });
+    mysql.getConnection((error, conn) => {
+        if (error) {
+            return res.status(500).send({
+                "error": error
+            });
+        }
+        conn.query(
+            'SELECT * FROM customers WHERE id = ?',
+            [req.params.id],
+            (error, result, field) => {
+                conn.release();
+
+                if (error) {
+                    return res.status(500).send({
+                        "error": error
+                    });
+                }
+
+                res.status(200).send({
+                    "result": result
+                });
+            }
+        )
+    })
 });
 
 module.exports = router;
-
-/*
-const UserController = require('../Controllers/UserController');
-
-module.exports = (app) => {
-    app.post('/usuario', UserController.post);
-    app.put('/usuario/:id', UserController.put);
-    app.delete('/usuario/:id', UserController.del);
-    app.get('/usuarios', UserController.get);
-    app.get('/usuario/:id', UserController.getId);
-}
-*/
