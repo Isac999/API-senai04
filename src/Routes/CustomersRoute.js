@@ -51,7 +51,7 @@ router.post('/', (req, res, next) => {
                 }
 
                 res.status(201).send({
-                    "mensagem": "Produto inserido",
+                    "message": "Success",
                     "id_customer": result.insertId,
                     "values": {
                         "name": req.body.name,
@@ -93,10 +93,16 @@ router.patch('/', (req, res, next) => {
                     });
                 }
                 res.status(200).send({
-                    "result": result
+                    "message": "Update success",
+                    "id_customer": req.body.id,
+                    "newValues": {
+                        "name": req.body.name,
+                        "money": req.body.money,
+                        "email": req.body.email,
+                        "password": req.body.password
+                    }
                 });
             }
-
         )
     })
 });
@@ -121,7 +127,7 @@ router.delete('/', (req, res, next) => {
                 }
 
                 res.status(200).send({
-                    "result": result
+                    "message": "Deleted with success",
                 });
             }
         )
