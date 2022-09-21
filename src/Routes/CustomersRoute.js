@@ -12,10 +12,16 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
 
     mysql.getConnection((error, conn) => {
+        if (error) { 
+            return res.status(500).send({
+                "error": error
+            })
+        }
         conn.query(
-            `INSERT INTO customers (name, money, email, password) VALUES (?, ?, ?, ?)`,
+            'INSERT INTO customers (name, money, email, password) VALUES (?, ?, ?, ?)',
             [req.body.name, req.body.money, req.body.email, req.body.password],
             (error, result, field) => {
+                
                 conn.release();
 
                 if (error) {
@@ -25,8 +31,9 @@ router.post('/', (req, res, next) => {
                     });
                 }
 
-                return res.status(201).send({
+                res.status(201).send({
                     "mensagem": "Produto inserido",
+                    "id_customer": result.insertId,
                     "values": {
                         "name": req.body.name,
                         "money": req.body.money,
@@ -37,11 +44,6 @@ router.post('/', (req, res, next) => {
             }
         )
     })
-
-    res.status(201).send({
-        "mensagem": "Acessado a rota atual com POST",
-        "result": customer
-    });
 });
 
 router.put('/', (req, res, next) => {
