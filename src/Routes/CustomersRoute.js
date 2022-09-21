@@ -66,10 +66,40 @@ router.post('/', (req, res, next) => {
     })
 });
 
-router.put('/', (req, res, next) => {
-    res.status(200).send({
-        "mensagem": "Acessado a rota atual com PUT"
-    });
+router.patch('/', (req, res, next) => {
+    mysql.getConnection((error, conn) => {
+        if (error) {
+            return res.status(500).send({
+                "error": error
+            });
+        }
+        conn.query(
+            `UPDATE customers SET 
+            name = ?,
+            money = ?,
+            email = ?,
+            password = ? WHERE id = ?`,
+            [
+                req.body.name,
+                req.body.money,
+                req.body.email,
+                req.body.password,
+                req.body.id
+            ],
+            (error, result, field) => {
+                conn.release();
+                if (error) {
+                    return res.status(500).send({
+                        "error": error
+                    });
+                }
+                res.status(200).send({
+                    "result": result
+                });
+            }
+
+        )
+    })
 });
 
 router.delete('/', (req, res, next) => {
