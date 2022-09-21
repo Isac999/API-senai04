@@ -11,5 +11,5 @@ INSERT INTO products (name, price, description, image_link, created_by) VALUES
 ('Bolsa Media', 100.00, 'Uma bolsa unissex estilosa - M', 'https://google.com/linkbolsaMedia', 3),
 ('Bolsa Grande', 115.00, 'Uma bolsa unissex estilosa - G', 'https://google.com/linkbolsaGrande', 3),
 ('Canivete', 56.00, 'Uma canivete suiço multifunções', 'https://google.com/linkcanivetesuico3214f', 2),
-('', 56.00, 'Uma canivete suiço multifunções', 'https://google.com/linkcanivetesuico3214f', 2),
+('Bicicleta', 456.00, 'Uma bike bonitona', 'https://google.com/linkbike32asd14f', 6);
 

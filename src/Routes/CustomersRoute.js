@@ -131,7 +131,7 @@ router.delete('/', (req, res, next) => {
                         "error": error
                     });
                 }
-
+                
                 res.status(200).send({
                     "message": "Deleted with success",
                     "method": "DELETE",
@@ -160,7 +160,12 @@ router.get('/:id', (req, res, next) => {
                         "error": error
                     });
                 }
-
+                if (result.length == 0) {
+                    return res.status(404).send({
+                        "message": "Customer not found",
+                        "id": req.params.id
+                    }) 
+                }
                 res.status(200).send({
                     "message": "Successfully request",
                     "legth":  result.length,
