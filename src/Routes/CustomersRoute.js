@@ -30,7 +30,6 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-
     mysql.getConnection((error, conn) => {
         if (error) { 
             return res.status(500).send({
@@ -103,10 +102,31 @@ router.patch('/', (req, res, next) => {
 });
 
 router.delete('/', (req, res, next) => {
-    res.status(200).send({
-        "mensagem": "Acessado a rota atual com DELETE"
-    });
-});
+    mysql.getConnection((error, conn) => {
+        if (error) {
+            return res.status(500).send({
+                "error": error
+            });
+        }
+        conn.query(
+            'DELETE FROM customers WHERE id = ?',
+            [req.body.id],
+            (error, result, field) => {
+                conn.release();
+
+                if (error) {
+                    return res.status(500).send({
+                        "error": error
+                    });
+                }
+
+                res.status(200).send({
+                    "result": result
+                });
+            }
+        )
+    })
+})
 
 router.get('/:id', (req, res, next) => {
     mysql.getConnection((error, conn) => {
