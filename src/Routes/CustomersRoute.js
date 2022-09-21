@@ -4,9 +4,29 @@ const router = express.Router();
 const mysql = require('../../mysql').pool;
 
 router.get('/', (req, res, next) => {
-    res.status(202).send({
-        "mensagem": "Acessado a rota atual com GET"
-    });
+    mysql.getConnection((error, conn) => {
+        if (error) {
+            return res.status(500).send({
+                "error": error
+            })
+        }
+        conn.query(
+            'SELECT * FROM customers;',
+            (error, result, field) => {
+                conn.release();
+
+                if (error) {
+                    return res.status(500).send({
+                        "error": error
+                    })
+                }
+
+                res.status(200).send({
+                    "result": result
+                })
+            }
+        )
+    })
 });
 
 router.post('/', (req, res, next) => {
