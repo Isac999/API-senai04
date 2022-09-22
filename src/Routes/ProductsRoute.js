@@ -24,7 +24,7 @@ router.get('/', (req, res, next) => {
                     "message": "Successfully request",
                     "legth":  result.length,
                     "method": "GET",
-                    "result":result
+                    "result": result
                 });
             }
         )
@@ -92,7 +92,8 @@ router.patch('/', (req, res, next) => {
                 req.body.price,
                 req.body.description,
                 req.body.image_link,
-                req.body.created_by
+                req.body.created_by,
+                req.body.id
             ],
             (error, result, field) => {
                 conn.release();
@@ -150,10 +151,32 @@ router.delete('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-    let id = req.params.id;
-    res.status(200).send({
-        "mensagem": `Retornando o id: ${id}` 
-    });
+    mysql.getConnection((error, conn) => {
+        if (error) {
+            return res.status(500).send({
+                "error": error
+            });
+        }
+        conn.query(
+            'SELECT * FROM products WHERE id = ?',
+            [req.body.id],
+            (error, result, field) => {
+                conn.release();
+
+                if (error) {
+                    return res.status(500).send({
+                        "error": error
+                    });
+                }
+                if (result.length == 0) {
+                    return res.status(404).send({
+                        "message": "CProduct not found",
+                        "id": req.params.id
+                    })
+                }
+            }
+        )
+    })
 });
 
 module.exports = router;

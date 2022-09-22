@@ -13,3 +13,8 @@ INSERT INTO products (name, price, description, image_link, created_by) VALUES
 ('Canivete', 56.00, 'Uma canivete suiço multifunções', 'https://google.com/linkcanivetesuico3214f', 2),
 ('Bicicleta', 456.00, 'Uma bike bonitona', 'https://google.com/linkbike32asd14f', 6);
 
+INSERT INTO purchases (customer_id, product_id, purchase_value) VALUES 
+(1, 2, 100.00),
+(1, 4, 56.00),
+(5, 6, 456.00),
+(4, 3, 115.00);
