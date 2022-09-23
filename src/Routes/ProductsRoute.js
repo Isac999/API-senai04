@@ -172,8 +172,15 @@ router.get('/:id', (req, res, next) => {
                     return res.status(404).send({
                         "message": "CProduct not found",
                         "id": req.params.id
-                    })
+                    });
                 }
+
+                res.status(200).send({
+                    "message": "Successfully request",
+                    "legth":  result.length,
+                    "method": "GET",
+                    "result": result
+                });
             }
         )
     })
