@@ -1,8 +1,8 @@
 const { request } = require('express');
 const express = require('express');
-const { render } = require('../../app');
 const router = express.Router();
-const mysql = require('../../mysql').pool;
+const mysql = require('../../mysql');
+const bcrypt = require('bcryptjs');
 
 router.get('/', (req, res, next) => {
     mysql.getConnection((error, conn) => {
@@ -40,34 +40,42 @@ router.post('/', (req, res, next) => {
                 "error": error
             });
         }
-        conn.query(
-            'INSERT INTO customers (name, money, email, password) VALUES (?, ?, ?, ?)',
-            [req.body.name, req.body.money, req.body.email, req.body.password],
-            (error, result, field) => {
-                
-                conn.release();
 
-                if (error) {
-                    return res.status(500).send({
-                        'error': error,
-                        'response': null
-                    });
-                }
-
-                res.status(201).send({
-                    "message": "Successfully created",
-                    "method": "POST",
-                    "id_customer": result.insertId,
-                    "values": {
-                        "name": req.body.name,
-                        "money": req.body.money,
-                        "email": req.body.email,
-                        "password": req.body.password
-                    }
+        bcrypt.hash(req.body.password, 10, (errBcrypt, hash) => {
+            if (errBcrypt) {
+                return res.status(500).send({
+                    "error": errBcrypt
                 });
             }
-        )
-    })
+            
+            conn.query(
+                'INSERT INTO customers (name, money, email, password) VALUES (?, ?, ?, ?)',
+                [req.body.name, req.body.money, req.body.email, hash],
+                (error, result, field) => {
+                    
+                    conn.release();
+
+                    if (error) {
+                        return res.status(500).send({
+                            'error': error,
+                            'response': null
+                        });
+                    }
+
+                    res.status(201).send({
+                        "message": "Successfully created",
+                        "method": "POST",
+                        "id_customer": result.insertId,
+                        "values": {
+                            "name": req.body.name,
+                            "money": req.body.money,
+                            "email": req.body.email
+                        }
+                    });
+                }
+            )
+        })
+    });
 });
 
 router.patch('/', (req, res, next) => {
