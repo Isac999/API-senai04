@@ -8,4 +8,5 @@ var pool = mysql.createPool({
     'port': process.env.MYSQL_PORT
 });
 
-exports.pool = pool;
+//exports.pool = pool;
+module.exports = pool
